@@ -14,6 +14,7 @@ public class User {
         this.name = null;
         this.login = null;
         this.senha = null;
+        this.roleName = null;
         
     }
     
@@ -33,6 +34,17 @@ public class User {
         this.name = name;
         this.login = login;
         this.senha = senha;
+        
+    }
+
+    public User(int id, int idRole, String name, String login, String senha, String roleName) {
+        
+        this.id = id;
+        this.idRole = idRole;
+        this.name = name;
+        this.login = login;
+        this.senha = senha;
+        this.roleName = roleName;
         
     }
     
@@ -76,11 +88,20 @@ public class User {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
     
     private int id;
     private int idRole;
     private String name;
     private String login;
     private String senha;
+    private String roleName;
     
 }

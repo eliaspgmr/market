@@ -3,10 +3,12 @@ package sample.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-
+import sample.model.bean.Session;
 import sample.view.ConfigApp;
 import sample.model.bean.User;
 import sample.model.dao.UserDAO;
+import sample.model.bean.Roles;
+import sample.model.dao.RoleDAO;
 import sample.view.MainApp;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -45,12 +47,17 @@ public class LoginController {
     private void loginAction() {
         
         UserDAO userDAO = new UserDAO();
+        RoleDAO roleDAO = new RoleDAO();
         User user = userDAO.select(txtLogin.getText());
         
         if(user.getLogin() == null) {
             System.out.println("Usuário Inválido!");
         }else if(Criptography.enc(txtPassword.getText()).equals(user.getSenha())){
             
+            user.setRoleName(roleDAO.selectById(user.getRoleId).getRoleName());
+
+            Session session = new Session(user);
+
             MainApp.getStage().show();
             LoginApp.getLoginStage().close();
             

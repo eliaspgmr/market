@@ -137,6 +137,38 @@ public class UserDAO {
         
         return user;
     }
+
+    public User selectById(int id) {
+        
+        Connection connection = ConnectionMarket.getConnection();
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        User user = new User();
+        
+        try {
+            
+            statement = connection.prepareStatement("SELECT * FROM users WHERE id_user = ?");
+            statement.setInt(1, id);
+            result = statement.executeQuery();
+            
+            if(result.next()) {
+                
+               user.setId(result.getInt("id_user"));
+               user.setIdRole(result.getInt("id_role"));
+               user.setName(result.getString("name"));
+               user.setLogin(result.getString("login"));
+               user.setSenha(result.getString("password"));
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionMarket.closeConnection(connection, statement, result);
+        }
+        
+        return user;
+    }
     
     
 }
